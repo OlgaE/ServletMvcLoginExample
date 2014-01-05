@@ -27,9 +27,19 @@ public class LoginServlet extends HttpServlet {
 		
 		if(pass && person != null){
 			request.setAttribute("user", person);
-			//response.sendRedirect("success.jsp");
+			
+			// Here we can use session object and then call it from the jsp page,
+			// still using response.sendRedirect();
+			// In the jsp: <% Person person = (Person) session.getAttribute("user"); %>
+			// 
+			// request.getSession().setAttribute("user", person);
+			// response.sendRedirect("success.jsp");
+			
+			// This is how to use the same request object:
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/success.jsp");
 			dispatcher.forward(request, response);
+			// In the jsp: ${user.firstname }.
+			
 			return;
 		} else {
 			response.sendRedirect("login-failed.jsp");
