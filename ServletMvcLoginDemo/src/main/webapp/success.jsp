@@ -7,6 +7,7 @@
 <title>Success</title>
 </head>
 <body>
-	Login successful.
+	<h2>Login successful. User name is </h2>
+	<h3>${user.firstname } ${user.lastname }</h3>
 </body>
 </html>

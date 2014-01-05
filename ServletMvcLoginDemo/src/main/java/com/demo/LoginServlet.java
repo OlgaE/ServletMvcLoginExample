@@ -2,11 +2,13 @@ package com.demo;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.demo.model.Person;
 import com.demo.service.LoginService;
 
 public class LoginServlet extends HttpServlet {
@@ -20,10 +22,14 @@ public class LoginServlet extends HttpServlet {
 		password = request.getParameter("passworD");
 		
 		LoginService service = new LoginService();
-		boolean result = service.authenticate(userId, password);
+		boolean pass = service.authenticate(userId, password);
+		Person person = service.getPersonById(userId);
 		
-		if(result){
-			response.sendRedirect("success.jsp");
+		if(pass && person != null){
+			request.setAttribute("user", person);
+			//response.sendRedirect("success.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/success.jsp");
+			dispatcher.forward(request, response);
 			return;
 		} else {
 			response.sendRedirect("login-failed.jsp");
